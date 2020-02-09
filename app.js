@@ -10,7 +10,6 @@ function randChoice(arr) {
 	return arr[Math.floor(Math.random() * arr.length)];
 }
 
-
 let people = [];
 
 for(let i = 0; i < 20; i++) {
@@ -20,18 +19,25 @@ for(let i = 0; i < 20; i++) {
 		age = Math.floor(Math.random() * 79);
 	}
 
+	let number = Math.floor(Math.random() * 1000000000);
+	while (number < 100000000) {
+		number = Math.floor(Math.random() * 1000000000);
+	}
+
 	const person = {
 		gender: gender,
 		firstName: gender == 'M' ? randChoice(maleNames) : randChoice(femaleNames),
 		age: age,
 		lastName: randChoice(lastNames),
+		number: number,
 	};
 
-	const personJSON = JSON.stringify(person);	
-	people.push(personJSON);
+	people.push(person);
 }
 
-fs.writeFile('outputfile.txt', people, (err) => {
+const data = JSON.stringify(people);
+
+fs.writeFile('outputfile.txt', data, (err) => {
 	if(err) throw err;
-	console.log(people, 'The file has been saved!');
+	console.log('The file has been saved!');
 });
